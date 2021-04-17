@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Backend", "Scheduler.Backend.csproj", "{3F641AE4-55E5-4A94-B900-9118E6CBD092}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scheduler.Backend", "Scheduler.Backend.csproj", "{3F641AE4-55E5-4A94-B900-9118E6CBD092}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Migrations", "..\Scheduler.Migrations\Scheduler.Migrations.csproj", "{595ECEC5-C17B-4B5D-8DE5-4351371E7320}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scheduler.Migrations", "..\Scheduler.Migrations\Scheduler.Migrations.csproj", "{595ECEC5-C17B-4B5D-8DE5-4351371E7320}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Common", "..\Scheduler.Common\Scheduler.Common.csproj", "{C8F9410F-2A04-4DFC-88FA-4BF3AF185674}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scheduler.Common", "..\Scheduler.Common\Scheduler.Common.csproj", "{C8F9410F-2A04-4DFC-88FA-4BF3AF185674}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Tests", "..\Scheduler.Tests\Scheduler.Tests.csproj", "{DDCD0136-B623-483A-98BC-76AE7A9341FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{C8F9410F-2A04-4DFC-88FA-4BF3AF185674}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8F9410F-2A04-4DFC-88FA-4BF3AF185674}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8F9410F-2A04-4DFC-88FA-4BF3AF185674}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDCD0136-B623-483A-98BC-76AE7A9341FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDCD0136-B623-483A-98BC-76AE7A9341FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDCD0136-B623-483A-98BC-76AE7A9341FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDCD0136-B623-483A-98BC-76AE7A9341FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
