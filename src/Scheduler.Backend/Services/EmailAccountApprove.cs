@@ -17,7 +17,7 @@ namespace Scheduler.Services.Implementations {
 
 		private readonly ISmtpClient m_smtpClient;
 
-		private static Random m_RandomGenerator = new Random ( DateTime.Now.Millisecond );
+		private static Random m_RandomGenerator = new( DateTime.Now.Millisecond );
 
 		/// <summary>
 		/// Create instance of <see cref="EmailAccountApprove"/>.
@@ -32,7 +32,7 @@ namespace Scheduler.Services.Implementations {
 
 		private string GenerateString ( int length , Random random ) {
 			string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-			StringBuilder result = new StringBuilder ( length );
+			StringBuilder result = new( length );
 			for ( int i = 0 ; i < length ; i++ ) {
 				result.Append ( characters[random.Next ( characters.Length )] );
 			}
@@ -67,12 +67,12 @@ namespace Scheduler.Services.Implementations {
 			};
 			await m_dataContext.AddOrUpdateAsync ( new Query ( "emailapprove" ) , emailApprove , insert: true );
 
-			var body = "<p><font size='14' color='blue'>Спасибо за регистрацию в Quiz Battle!</font><p>";
-			body += "<p><font size='10' color='black'>Для подтверждения своего email адреса просто перейдите по ссылке ниже.</font><p>";
+			var body = "<p><font size='14' color='blue'>Thank you for registration!</font><p>";
+			body += "<p><font size='10' color='black'>To verify your email address, just follow the link below.</font><p>";
 			body += $"<p><a href='{emailApprove.ApproveId}'></a><p>";
-			body += "<p><font size='8' color='black'>*Обращем Ваше внимание что неподтвержденные аккаунты будут удалены после 3 дней без подтверждения.</font><p>";
+			body += "<p><font size='8' color='black'>*Please note that unconfirmed accounts will be deleted after 3 days without confirmation.</font><p>";
 
-			await m_smtpClient.SendEmail ( user.Email , body , "Подтверждение Email для QuizBattle " + '\uF680' );
+			await m_smtpClient.SendEmail ( user.Email , body , "Confirm Email" + '\uF680' );
 		}
 
 		public async Task<bool> VerifyApproveIdFromEmail ( string approveId ) {
