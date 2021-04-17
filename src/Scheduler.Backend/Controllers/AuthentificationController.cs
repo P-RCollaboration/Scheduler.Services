@@ -84,7 +84,7 @@ namespace Scheduler.Backend.Controllers {
 			}
 			if ( !( Regex.Matches ( model.Password , "[A-Z]{1,}" ).Any () && Regex.Matches ( model.Password , "[a-z]{1,}" ).Any () &&
 				Regex.Matches ( model.Password , "[0-9]{1,}" ).Any () && Regex.Matches ( model.Password , "[\\!\\#\\&\\*\\%\\?]{1,}" ).Any () ) ) {
-				result.Message = "The password must contain at least one uppercase and one lowercase Latin letter, a number, and one character from ! # & *%?";
+				result.Message = "The password must contain at least one uppercase and one lowercase Latin letter, a number, and one character from ! # & * % ?";
 				return result;
 			}
 			if ( model.Password.Length < 8 ) {
