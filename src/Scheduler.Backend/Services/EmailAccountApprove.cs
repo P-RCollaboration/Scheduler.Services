@@ -17,7 +17,7 @@ namespace Scheduler.Services.Implementations {
 
 		private readonly ISmtpClient m_smtpClient;
 
-		private static Random m_RandomGenerator = new( DateTime.Now.Millisecond );
+		private static Random m_RandomGenerator = new ( DateTime.Now.Millisecond );
 
 		/// <summary>
 		/// Create instance of <see cref="EmailAccountApprove"/>.
@@ -32,7 +32,7 @@ namespace Scheduler.Services.Implementations {
 
 		private string GenerateString ( int length , Random random ) {
 			string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-			StringBuilder result = new( length );
+			StringBuilder result = new ( length );
 			for ( int i = 0 ; i < length ; i++ ) {
 				result.Append ( characters[random.Next ( characters.Length )] );
 			}
@@ -90,10 +90,11 @@ namespace Scheduler.Services.Implementations {
 			if ( user == null ) return false;
 
 			user.IsEmailApproved = true;
-			await m_dataContext.NonResultQueryAsync (
+			await m_dataContext.AddOrUpdateAsync (
 				new Query ( "users" )
-					.Where ( "id" , user.Id )
-					.AsUpdate ( user )
+					.Where ( "id" , user.Id ) ,
+				user ,
+				insert: false
 			);
 
 			return true;

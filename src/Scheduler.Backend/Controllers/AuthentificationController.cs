@@ -6,6 +6,7 @@ using Scheduler.Common.Security;
 using SqlKata;
 using System;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -30,8 +31,7 @@ namespace Scheduler.Backend.Controllers {
 			m_emailAccountApprove = emailAccountApprove ?? throw new ArgumentNullException ( nameof ( emailAccountApprove ) );
 		}
 
-		[HttpPost]
-		[Route ( "signin" )]
+		[HttpPost( "signin" )]
 		public async Task<AuthentificationResultModel> Authentification ( [FromBody] AuthentificationModel model ) {
 			var result = new AuthentificationResultModel {
 				IsAuthentificated = false ,
@@ -60,8 +60,7 @@ namespace Scheduler.Backend.Controllers {
 			return result;
 		}
 
-		[HttpPost]
-		[Route ( "signup" )]
+		[HttpPost( "signup" )]
 		public async Task<RegistrationResultModel> Registration ( [FromBody] RegistrationModel model ) {
 			var result = new RegistrationResultModel {
 				IsRegistered = false ,
@@ -115,6 +114,13 @@ namespace Scheduler.Backend.Controllers {
 			result.Message = "";
 
 			return result;
+		}
+
+		[HttpGet("verify/{*path}")]
+		public async Task<bool> VerifyEmail(string path) {
+			await m_emailAccountApprove.VerifyApproveIdFromEmail ( WebUtility.UrlDecode ( path ) );
+
+			return true;
 		}
 
 	}

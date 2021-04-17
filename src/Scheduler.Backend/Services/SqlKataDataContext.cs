@@ -68,6 +68,9 @@ namespace Scheduler.Backend.Services.Implementations {
 		}
 
 		public async Task NonResultQueryAsync ( Query query ) {
+#if DEBUG
+			Debug.WriteLine ( "NonResultQueryAsync sql: " + new PostgresCompiler ().Compile ( query ).ToString () );
+#endif
 			var context = await GetContext ();
 
 			await context.FromQuery ( query ).GetAsync ( timeout: 10 );

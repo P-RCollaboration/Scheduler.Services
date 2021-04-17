@@ -29,7 +29,7 @@ namespace Scheduler.Backend {
 			services.AddSwaggerGen (
 				setupAction => {
 					setupAction.SwaggerDoc (
-						"Documentation" ,
+						"v1" ,
 						new OpenApiInfo {
 							Title = "Scheduler api specification" ,
 							Version = "v1"

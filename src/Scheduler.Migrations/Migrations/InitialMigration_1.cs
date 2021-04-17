@@ -15,6 +15,7 @@ namespace Scheduler.Migrations {
 		public async Task Down () {
 			await m_DataContext.NonResultQueriesAsync (
 				new string[] {
+					"DROP TABLE public.emailapprove;",
 					"DROP TABLE public.tokens;",
 					"DROP TABLE public.users;",
 					"DROP TABLE public.migrations;",
@@ -29,10 +30,12 @@ namespace Scheduler.Migrations {
 					"CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";",
 					"CREATE TABLE public.migrations (id text NOT NULL, created timestamp without time zone NOT NULL DEFAULT now(), CONSTRAINT migrations_pkey PRIMARY KEY (id));",
 					"ALTER TABLE public.migrations OWNER TO postgres;",
-					"CREATE TABLE public.users (id uuid NOT NULL DEFAULT uuid_generate_v4(), login text NOT NULL, password text NOT NULL, email text, CONSTRAINT users_pkey PRIMARY KEY (id));",
+					"CREATE TABLE public.users (id uuid NOT NULL DEFAULT uuid_generate_v4(), login text NOT NULL, password text NOT NULL, email text, isemailapproved bool DEFAULT false, CONSTRAINT users_pkey PRIMARY KEY (id));",
 					"ALTER TABLE public.users OWNER TO postgres;",
 					"CREATE TABLE public.tokens (id uuid NOT NULL DEFAULT uuid_generate_v4(), userid uuid NOT NULL, logined timestamp without time zone NOT NULL DEFAULT now(), CONSTRAINT tokens_pkey PRIMARY KEY (id), CONSTRAINT tokens_users_userid FOREIGN KEY (userid) REFERENCES public.users (id) ON DELETE NO ACTION ON UPDATE NO ACTION)",
 					"ALTER TABLE public.tokens OWNER TO postgres;",
+					"CREATE TABLE public.emailapprove (id uuid NOT NULL DEFAULT uuid_generate_v4(), userid uuid NOT NULL, approveid text NOT NULL, CONSTRAINT emailapprove_pkey PRIMARY KEY (id), CONSTRAINT emailapprove_users_userid FOREIGN KEY (userid) REFERENCES public.users (id) ON DELETE NO ACTION ON UPDATE NO ACTION);",
+					"ALTER TABLE public.emailapprove OWNER TO postgres;",
 					$"INSERT INTO public.migrations(id) VALUES ('{nameof(InitialMigration_1)}')"
 				}
 			);
