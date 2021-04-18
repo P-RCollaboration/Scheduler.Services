@@ -4,6 +4,8 @@
 
 		public const string Notes = "notes";
 
+		public const string Events = "events";
+
 	}
 
 }
