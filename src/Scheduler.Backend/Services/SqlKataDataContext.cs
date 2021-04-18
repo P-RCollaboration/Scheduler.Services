@@ -167,6 +167,8 @@ namespace Scheduler.Backend.Services.Implementations {
 			MapModel ( model , properties , resultRows );
 		}
 
+		//timezone != "Etc/UTC" ? $"SET LOCAL timezone = '{timezone}';"
+
 	}
 
 }
