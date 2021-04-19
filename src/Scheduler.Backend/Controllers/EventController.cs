@@ -68,7 +68,7 @@ namespace Scheduler.Backend.Controllers {
 			if ( token == Guid.Empty ) return new MultipleItemsModel<Event> { Message = "Token is incorrect" };
 			if ( !m_userTokens.ValidToken ( token ) ) return new MultipleItemsModel<Event> { Message = "Token is incorrect" };
 			if ( page < 1 ) return new MultipleItemsModel<Event> { Message = "Page is incorrect" };
-			if ( limit < 5 || limit > 100 ) return new MultipleItemsModel<Event> { Message = "Limit is incorrect" };
+			if ( limit is < 5 or > 100 ) return new MultipleItemsModel<Event> { Message = "Limit is incorrect" };
 			if ( timestamp < DateTime.Now.AddHours ( -24 ) ) return new MultipleItemsModel<Event> { Message = "Timestamp is incorrect" };
 
 			var items = await m_dataContext.GetItemsAsync<Event> (
@@ -83,6 +83,26 @@ namespace Scheduler.Backend.Controllers {
 				Message = ""
 			};
 		}
+
+		[HttpGet ( "mounth/{year}/{month}/{token}" )]
+		public async Task<MultipleItemsModel<Event>> GetUserEvents ( int year , int month , Guid token ) {
+			if ( token == Guid.Empty ) return new MultipleItemsModel<Event> { Message = "Token is incorrect" };
+			if ( !m_userTokens.ValidToken ( token ) ) return new MultipleItemsModel<Event> { Message = "Token is incorrect" };
+			if ( month is < 1 or > 12 ) return new MultipleItemsModel<Event> { Message = "Month is incorrect" };
+			if ( year is < 2017 or > 2025 ) return new MultipleItemsModel<Event> { Message = "Year is incorrect" };
+
+			var items = await m_dataContext.GetItemsAsync<Event> (
+				new Query ( TableNames.Events )
+					.WhereRaw ( $"date_part('year', starttime) = {year}" )
+					.WhereRaw ( $"date_part('month', starttime) = {month}" )
+					.Where ( "userid" , m_userTokens.GetUserIdByToken ( token ) )
+			);
+			return new MultipleItemsModel<Event> {
+				Items = items ,
+				Message = ""
+			};
+		}
+
 
 	}
 

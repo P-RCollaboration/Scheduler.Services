@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace Scheduler.Migrations {
 
 	public class NoteMigration_2 : IMigration {
-		
+
 		private readonly IDataContext m_DataContext;
 
 		public string Description => "Creating note tables";
@@ -15,7 +15,8 @@ namespace Scheduler.Migrations {
 		public async Task Down () {
 			await m_DataContext.NonResultQueriesAsync (
 				new string[] {
-					"DROP TABLE public.notes;"
+					"DROP TABLE public.notes;",
+					$"DELETE FROM public.migrations WHERE id ='{nameof(NoteMigration_2)}';"
 				}
 			);
 		}
