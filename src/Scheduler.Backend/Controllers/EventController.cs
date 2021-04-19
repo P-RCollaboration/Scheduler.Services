@@ -63,6 +63,20 @@ namespace Scheduler.Backend.Controllers {
 			return new ChangeItemModel { Result = true };
 		}
 
+		[HttpDelete ( "delete" )]
+		public async Task<bool> Delete ( Guid id , Guid token ) {
+			if ( !m_userTokens.ValidToken ( token ) ) return false;
+
+			await m_dataContext.NonResultQueryAsync (
+				new Query ( TableNames.Events )
+					.Where ( "id" , id )
+					.Where ( "userid" , m_userTokens.GetUserIdByToken ( token ) )
+					.AsDelete ()
+			);
+
+			return true;
+		}
+
 		[HttpGet ( "list/{page}/{timestamp}/{limit}/{token}" )]
 		public async Task<MultipleItemsModel<Event>> GetUserEvents ( int page , DateTime timestamp , int limit , Guid token ) {
 			if ( token == Guid.Empty ) return new MultipleItemsModel<Event> { Message = "Token is incorrect" };
