@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+	<script src="https://unpkg.com/vue@next"></script>
+	<script src="https://unpkg.com/vue-router@4"></script>
+	<script src="https://p-rcollaboration.github.io/CoreComponents/src/libraries/vuejs.bootstraper.js"></script>
+	<script src="https://p-rcollaboration.github.io/CoreComponents/src/libraries/resolveDependencies.js"></script>
+</head>
+
+<body>
+	<div id="app">
+	</div>
+
+	<script>
+		const app = Vue.createApp(
+			{
+				template: `<app-component></app-component>`,
+				components: {
+					AppComponent: Vue.defineAsyncComponent(() => VueBootstraper.loadComponent(`App.vue`))
+				}
+			}
+		);
+
+		// You need in real application creating routing rules dynamically (for example making some requests in services so on).
+		// I don't implement it in this example for simplicity.
+		const routes = [
+			{
+				path: `/authform`,
+				alias: `/`,
+				component: Vue.defineAsyncComponent(() => VueBootstraper.loadComponent(`http://localhost:5008/components/AuthForm.vue`))
+			},
+			{
+				path: `/events`,
+				component: Vue.defineAsyncComponent(() => VueBootstraper.loadComponent(`http://localhost:5007/components/Events.vue`))
+			}
+		]
+
+		const router = VueRouter.createRouter({
+			history: VueRouter.createWebHashHistory(),
+			routes
+		});
+
+		app.use(router);
+
+		VueBootstraper.require = DependencyResolver;
+		VueBootstraper.application = app;
+
+		app.mount('#app');
+	</script>
+</body>
+
+</html>
